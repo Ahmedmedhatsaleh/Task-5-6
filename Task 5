@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+pair<vector<char>, int> puzzle(int n) {
+    int N = 2 * n;
+    vector<char> disks(N);
+    for (int i = 0; i < N; i++) {
+        if (i % 2 == 0) disks[i] = 'D';
+        else disks[i] = 'L';
+    }
+    int moves = 0;
+    bool swapped = true;
+    while (swapped) {
+        swapped = false;
+        for (int i = 0; i < N - 1; i++) {
+            if (disks[i] == 'D' && disks[i + 1] == 'L') {
+                swap(disks[i], disks[i + 1]);
+                moves++;
+                swapped = true;
+            }
+        }
+    }
+    return {disks, moves};
+}
+int main() {
+    int n;
+    cout << "Enter the number of light and dark disks: "<< endl;
+    cin >> n;
+    auto result = puzzle(n);
+    vector<char> finalState = result.first;
+    int moveCount = result.second;
+    cout << "Final arrangement: " << endl;
+    for (char c : finalState) cout << c << " ";
+    cout << endl;
+    cout << "Total moves required = " << moveCount << endl;
+    cout << "Number of expected moves = " << (n * (n + 1)) / 2 << endl;
+    cout << "Formula n(n+1)/2 gives = " << (n * (n + 1)) / 2 << endl;
+    return 0;
+}
