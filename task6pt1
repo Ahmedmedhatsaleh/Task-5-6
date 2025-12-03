@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int weigh(int a, int b, const vector<int>& w) {
+    if (w[a] < w[b]) return -1;
+    if (w[a] > w[b]) return 1;
+    return 0;
+}
+string determination(const vector<int>& w) {
+    int r1 = weigh(0, 1, w);
+    if (r1 != 0) {
+        int r2 = weigh(0, 2, w);
+        if (r2 == 0) {
+            return (r1 == 1) ? "fake coin is lighter" : "fake coin is heavier";
+        } else {
+            return (r1 == 1) ? "fake coin is heavier" : "fake coin is lighter";
+        }
+    }
+    int r2 = weigh(2, 0, w);
+    if (r2 == 1) return "fake coin is heavier";
+    else return "fake coin is lighter";
+}
+int main() {
+    vector<int> w = {10, 10, 8, 10, 10};
+    cout << determination(w) << endl;
+    return 0;
+}
