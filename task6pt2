@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+string fakecheck(const vector<int>& w) {
+    int n = w.size();
+    unordered_map<int, int> freq;
+    for (int x : w) {
+        freq[x]++;
+    }
+    int realw = 0, fakew = 0;
+
+    for (auto& p : freq) {
+        if (p.second > 1) realw = p.first;
+        else fakew = p.first;
+    }
+    if (fakew < realw) return "fake coin is lighter";
+    else return "fake coin is heavier";
+}
+int main() {
+    srand(time(0));
+    int n;
+    cout << "enter number of coins: " << endl;
+    cin >> n;
+    vector<int> w(n);
+    int realw = rand() % 50 + 50;
+    int fakei = rand() % n;
+    bool lighter = rand() % 2;
+    for (int i = 0; i < n; i++) {
+        if (i == fakei) {
+            if (lighter) w[i] = realw - (rand() % 5 + 1); 
+            else w[i] = realw + (rand() % 5 + 1);
+        } else {
+            w[i] = realw;
+        }
+    }
+    cout << "generated coin weights: " << endl;
+    for (int i = 0; i < n; i++) {
+        cout << w[i] << " ";
+    }
+    cout << endl;
+    cout << fakecheck(w) << endl;
+    return 0;
+}
